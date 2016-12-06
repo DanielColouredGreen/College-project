@@ -9,4 +9,6 @@ comment3.params=we
 comment3.target=void\ handle(javafx.stage.WindowEvent)
 comment4.params=
 comment4.target=void\ confirmNewClicked()
-numComments=5
+comment5.params=
+comment5.target=void\ extClicked()
+numComments=6
