@@ -12,6 +12,8 @@ import java.util.List;
 public class Scene2Controller
 {
     private static Stage stage;
+    private SceneController parent;
+    
     
     @FXML   private Pane pane2;
     @FXML   private TextField newName;
@@ -20,6 +22,8 @@ public class Scene2Controller
     @FXML   private Button confirmNew;
     @FXML   private TextField newPlatform;
     @FXML   private Button exit;
+    
+    private game game;
     
         public Scene2Controller(){
             System.out.println("Loading Scene...");
@@ -45,6 +49,51 @@ public class Scene2Controller
                 System.out.println("FXML assertion failure: " + ae.getMessage());
                 Application.terminate();
             }
+            
+            System.out.println("Loading scene with the items from the database...");
+            @Suppresswarnings("unchecked")
+            List<Category> targetList = categoryChoiceBox.getItems();
+            Category.readAll(targetList);
+            categoryChoiceBox.getSeletionModel().selectFirst();
+            
+        }
+        
+        public void setParent(SceneController parent){
+            this.parent = parent;
+            
+        }
+        
+        public void loadItem(int id)
+        {
+            game = game.getById(id);
+            nameTextField.setText(game.name);
+            
+            List<Category> targetList = categoryChoiceBox.getItems();
+            for(category c : targetList){
+                if (c.id == game.categoryId){
+                    categoryChoiceBox.getSelectionModel().select(c);
+                }
+            }
+        }
+        
+        @FXML   void saveButtonClicked(){
+            System.out.println("Save button was clicked");
+            
+            if (game == null){
+                game = new game(0, "", 0);
+                       
+            }
+            
+            game.name = nameTextField.getText();
+            
+            Category selectedCategory = (category) categoryChoiceBox.getSelectionModel().getSelectedItem();
+            game.categoryId = selectedCategory.id;
+            
+            game.save();
+            
+            parent.initialize();
+            
+            stage.close();
         }
         
         public void prepareStageEvents(Stage stage){
@@ -56,14 +105,11 @@ public class Scene2Controller
         {
                 public void handle(WindowEvent we) {
                     System.out.println("Close button was clicked!");
+                    stage.close();
 
                 }
             });
     }       
-    
-    @FXML   void confirmNewClicked(){
-        System.out.println("confirm button was clicked");
-    }
     
     @FXML   void extClicked(){
         Application.terminate();

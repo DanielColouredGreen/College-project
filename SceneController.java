@@ -16,7 +16,7 @@ public class SceneController
     private static Stage stage;
 
     @FXML   private SplitPane pane;
-    @FXML   private TableView table;
+    @FXML   private ListView list;
     @FXML   private Button searchButton;
     @FXML   private Button addButton;
     @FXML   private Button deleteButton;
@@ -43,12 +43,17 @@ public class SceneController
         assert editButton != null : "editButton not found";
         assert search != null : "search not found";
         assert exitButton != null : "Exit button not found";
-        assert table != null : "table not found";
+        assert list != null : "table not found";
     }
     catch (AssertionError ae){
         System.out.println("FXML assertion failure: " + ae.getMessage());
         Application.terminate();
     }
+    
+    System.out.println("Populating list with items from table...");
+    @SuppressWarnings("unchecked")
+    List<games> targetList = mainListView.getItems();
+    games.readAll(targetList);
     }
    
 
@@ -73,41 +78,62 @@ public class SceneController
 
     @FXML   void addClicked() 
     {
-        try
-        {
-            FXMLLoader loader = new FXMLLoader(Application.class.getResource("EditUI.fxml"));
-            Stage stage2 = new Stage();
-            stage2.setTitle("EditUI");
-            stage2.setScene(new Scene(loader.load()));
-            stage2.show();           
-            Scene2Controller controller2 = loader.getController();
-            controller2.prepareStageEvents(stage2);
-
-   
-
-
-        }
-        catch (Exception ex)
-        {
-            System.out.println(ex.getMessage());
-        }
+       System.out.println("add was clicked");
+       openNewScene(0);
     }
         
     
 
     @FXML   void deleteClicked(){
         System.out.println("delete button was clicked");
+        game selectedItem = (game) mainListView.getSelectionModel().getselectedItem();
+        game.deleteById(selectedItem.id);
+        initialize();
     }
 
     @FXML   void editClicked(){
         System.out.println("edit button was clicked");
+        game selectedItem = (game) mainListView.getSelectionModel().getSelectedItem();
+        openNewScene(selectedItem.id);
     }
 
-    @FXML   void tableClicked(){
+    @FXML   void listClicked(){
         System.out.println("table item was clicked");
+        game selectedItem = (game) mainListView.getSelectionModel().getSelectedItem();
+        
+        if ( selectedItem == null){
+            System.out.println("nothing has been selected");
+        }
+        else{
+            System.out.println(selectedItem + " (id: " + selectedItem.id + ") is selected.");
+        }
     }
+    
+    void openNewScene(int id){
+        FXMLLoader loader = new FXMLLoader(Application.class.getResource("secondScene.fxml"));
+        
+        try
+        {  
+            
+            Stage stage2 = new Stage();
+            stage2.setTitle("Info");
+            stage2.setScene(new Scene(loader.load()));
+            stage2.show();           
 
-    @FXML   void exitClicked(){
-        Application.terminate();
+            Scene2Controller controller2 = loader.getController();
+            controller2.prepareStageEvents(stage2);
+            
+            controller2.setParent(this);
+            if (id != 0) controller2.loadItem(id);
+            
+        }
+        catch (Exception ex) 
+        {
+            System.out.println(ex.getMessage());
+            terminate();
+        }
+
+    
+
     }
 }
