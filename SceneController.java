@@ -52,7 +52,7 @@ public class SceneController
     
     System.out.println("Populating list with items from table...");
     @SuppressWarnings("unchecked")
-    List<games> targetList = mainListView.getItems();
+    List<games> targetList = list.getItems();
     games.readAll(targetList);
     }
    
@@ -86,26 +86,26 @@ public class SceneController
 
     @FXML   void deleteClicked(){
         System.out.println("delete button was clicked");
-        game selectedItem = (game) mainListView.getSelectionModel().getselectedItem();
-        game.deleteById(selectedItem.id);
+        games selectedItem = (games) list.getSelectionModel().getSelectedItem();
+        games.deleteByGameId(selectedItem.GameId);
         initialize();
     }
 
     @FXML   void editClicked(){
         System.out.println("edit button was clicked");
-        game selectedItem = (game) mainListView.getSelectionModel().getSelectedItem();
-        openNewScene(selectedItem.id);
+        games selectedItem = (games) list.getSelectionModel().getSelectedItem();
+        openNewScene(selectedItem.GameId);
     }
 
     @FXML   void listClicked(){
         System.out.println("table item was clicked");
-        game selectedItem = (game) mainListView.getSelectionModel().getSelectedItem();
+        games selectedItem = (games) list.getSelectionModel().getSelectedItem();
         
         if ( selectedItem == null){
             System.out.println("nothing has been selected");
         }
         else{
-            System.out.println(selectedItem + " (id: " + selectedItem.id + ") is selected.");
+            System.out.println(selectedItem + " (id: " + selectedItem.GameId + ") is selected.");
         }
     }
     
@@ -130,7 +130,7 @@ public class SceneController
         catch (Exception ex) 
         {
             System.out.println(ex.getMessage());
-            terminate();
+            Application.terminate();
         }
 
     

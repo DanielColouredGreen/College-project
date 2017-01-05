@@ -23,7 +23,7 @@ public class Scene2Controller
     @FXML   private TextField newPlatform;
     @FXML   private Button exit;
     
-    private game game;
+    private games game;
     
         public Scene2Controller(){
             System.out.println("Loading Scene...");
@@ -50,11 +50,11 @@ public class Scene2Controller
                 Application.terminate();
             }
             
-            System.out.println("Loading scene with the items from the database...");
-            @Suppresswarnings("unchecked")
-            List<Category> targetList = categoryChoiceBox.getItems();
-            Category.readAll(targetList);
-            categoryChoiceBox.getSeletionModel().selectFirst();
+          System.out.println("Loading scene with the items from the database...");
+          //@Suppresswarnings("unchecked")
+          List<Publisher> targetList = newPublisher.getItems();
+          Publisher.readAll(targetList);
+          categoryChoiceBox.getSeletionModel().selectFirst();
             
         }
         
@@ -63,30 +63,30 @@ public class Scene2Controller
             
         }
         
-        public void loadItem(int id)
+        public void loadItem(int GameId)
         {
-            game = game.getById(id);
-            nameTextField.setText(game.name);
-            
-            List<Category> targetList = categoryChoiceBox.getItems();
-            for(category c : targetList){
-                if (c.id == game.categoryId){
-                    categoryChoiceBox.getSelectionModel().select(c);
-                }
+           game = game.getByGameId(GameId);
+            newName.setText(game.Name);
+           
+           List<Publisher> targetList = newPublisher.getItems();
+           for(category c : targetList){
+               if (c.id == game.categoryId){
+                   categoryChoiceBox.getSelectionModel().select(c);
+               }
             }
-        }
+       }
         
         @FXML   void saveButtonClicked(){
             System.out.println("Save button was clicked");
             
             if (game == null){
-                game = new game(0, "", 0);
+                game = new games("", 0, 0, 0, 0, 0);
                        
             }
             
-            game.name = nameTextField.getText();
+            game.Name = newName.getText();
             
-            Category selectedCategory = (category) categoryChoiceBox.getSelectionModel().getSelectedItem();
+            Publisher selectedPublish = (category) categoryChoiceBox.getSelectionModel().getSelectedItem();
             game.categoryId = selectedCategory.id;
             
             game.save();

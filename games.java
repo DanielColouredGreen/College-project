@@ -2,7 +2,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.util.List;
-
+import java.util.*;
 public class games
 {
     public String Name;
@@ -23,12 +23,12 @@ public class games
        
     }
     
-    @Overide public String toString()
+    @Override public String toString()
     {
         return Name;
     }
     
-    public static void readAll(List<game> list){
+    public static void readAll(List<games> list){
         list.clear();
         
         PreparedStatement statement = Application.database.newStatement("SELECT Name, PublisherId, PrimaryGenreId, SecondaryGenreId, PlatformId FROM Games ORDER BY GameId");
@@ -51,7 +51,7 @@ public class games
         }
     }
     
-    public static game getByGameId(int GameId)
+    public static games getByGameId(int GameId)
     {
         game game = null;
         

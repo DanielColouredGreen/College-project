@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<SplitPane fx:id="pane" dividerPositions="0.13879598662207357" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #0B3B39;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneController">
+<SplitPane fx:id="pane" dividerPositions="0.13879598662207357" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #0B3B39;" xmlns="http://javafx.com/javafx/8.0.92" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneController">
   <items>
     <AnchorPane fx:id="anchor" minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="284.0" style="-fx-background-color: #0B3B39;">
          <children>
@@ -19,7 +19,7 @@
             <TextField fx:id="search" layoutX="157.0" layoutY="2.0" prefHeight="25.0" prefWidth="173.0" promptText="Search Game..." style="-fx-background-color: #494848;" />
             <Button fx:id="searchButton" layoutX="329.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#searchClicked" style="-fx-background-color: #150202;" text="Search" textFill="WHITE" />
             <Button fx:id="exitButton" layoutX="423.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#exitClicked" style="-fx-background-color: #150202;" text="Exit" textFill="WHITE" />
-            <ListView fx:id="list" layoutX="6.0" layoutY="49.0" onMouseClicked="#listClicked" prefHeight="342.0" prefWidth="403.0" style="-fx-background-color: #838383;" />
+            <ListView fx:id="mainListView" layoutX="6.0" layoutY="49.0" onMouseClicked="#listClicked" prefHeight="342.0" prefWidth="403.0" style="-fx-background-color: #838383;" />
          </children></AnchorPane>
   </items>
 </SplitPane>
