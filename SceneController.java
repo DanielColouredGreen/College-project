@@ -84,30 +84,30 @@ public class SceneController
         
     
 
-    @FXML   void deleteClicked(){
-        System.out.println("delete button was clicked");
-        games selectedItem = (games) list.getSelectionModel().getSelectedItem();
-        games.deleteByGameId(selectedItem.GameId);
-        initialize();
-    }
+    //@FXML   void deleteClicked(){
+     //   System.out.println("delete button was clicked");
+    //    games selectedItem = (games) list.getSelectionModel().getSelectedItem();
+    //    games.deleteByGameId(selectedItem.GameId);
+      //  initialize();
+    //}
 
-    @FXML   void editClicked(){
-        System.out.println("edit button was clicked");
-        games selectedItem = (games) list.getSelectionModel().getSelectedItem();
-        openNewScene(selectedItem.GameId);
-    }
+    //@FXML   void editClicked(){
+      //  System.out.println("edit button was clicked");
+        //games selectedItem = (games) list.getSelectionModel().getSelectedItem();
+        //openNewScene(selectedItem.GameID);
+    //}
 
-    @FXML   void listClicked(){
-        System.out.println("table item was clicked");
-        games selectedItem = (games) list.getSelectionModel().getSelectedItem();
+    //@FXML   void listClicked(){
+      //  System.out.println("table item was clicked");
+        //games selectedItem = (games) list.getSelectionModel().getSelectedItem();
         
-        if ( selectedItem == null){
-            System.out.println("nothing has been selected");
-        }
-        else{
-            System.out.println(selectedItem + " (id: " + selectedItem.GameId + ") is selected.");
-        }
-    }
+        //if ( selectedItem == null){
+          //  System.out.println("nothing has been selected");
+        //}
+        //else{
+           // System.out.println(selectedItem + " (id: " + selectedItem.GameID + ") is selected.");
+        //}
+    //}
     
     void openNewScene(int id){
         FXMLLoader loader = new FXMLLoader(Application.class.getResource("secondScene.fxml"));
@@ -124,7 +124,7 @@ public class SceneController
             controller2.prepareStageEvents(stage2);
             
             controller2.setParent(this);
-            if (id != 0) controller2.loadItem(id);
+           // if (id != 0) controller2.loadItem(id);
             
         }
         catch (Exception ex) 

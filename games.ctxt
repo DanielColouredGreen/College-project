@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=Name\ PublisherName\ PrimaryGenreName\ SecondaryGenreName\ PlatformName
+comment0.target=games(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String)
+comment1.params=
+comment1.target=java.lang.String\ toString()
+comment2.params=list
+comment2.target=void\ readAll(java.util.List)
+comment3.params=GameId
+comment3.target=games\ getByGameId(int)
+comment4.params=GameId
+comment4.target=void\ deleteByGameId(int)
+numComments=5

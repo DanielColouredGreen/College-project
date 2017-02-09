@@ -1,33 +1,55 @@
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.util.List;
 
-/**
- * Write a description of class Publisher here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Publisher
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
-    /**
-     * Constructor for objects of class Publisher
-     */
-    public Publisher()
-    {
-        // initialise instance variables
-        x = 0;
+   public int PublisherId;
+   public String PublisherName;
+   public int StartYear;
+   
+   public Publisher(int PublisherId, String PublisherName, int StartYear)
+   {
+       this.PublisherId = PublisherId;
+       this.PublisherName = PublisherName;
+       this.StartYear = StartYear;
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
+    
+    @Override public String toString()
     {
-        // put your code here
-        return x + y;
+        return PublisherName;
+    }
+    
+    public static void readAll(List<Publisher> list)
+    {
+        list.clear();
+        
+        PreparedStatement statement = Application.database.newStatement("SELECT PublisherId, PublisherName, StartYear FROM Publisher OREDER BY PublisherId");
+        
+        if (statement != null)
+        {
+            ResultSet results = Application.database.runQuery(statement);
+            
+            if(results != null)
+            {
+                try{
+                    
+                while (results.next()) {
+                    list.add( new Publisher(results.getInt("PublisherId"), results.getString("PublisherName"), results.getInt("StartYear")));
+                }
+            }
+            
+            catch (SQLException resultsexception)
+            {
+                System.out.println("Database result processing error: " + resultsexception.getMessage());
+            }
+        }
     }
 }
+}
+                
+            
+            
+            
+
