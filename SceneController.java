@@ -10,6 +10,8 @@ import javafx.stage.WindowEvent;
 import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+//above is where i have imported multiple things including the controls for javaFX.
+
 
 public class SceneController
 {
@@ -23,7 +25,8 @@ public class SceneController
     @FXML   private Button editButton;
     @FXML   private TextField search;
     @FXML   private Button exitButton;
-
+    
+    
     public SceneController(){
         System.out.println("Loading Scene...");
         if (stage  != null)
@@ -32,7 +35,8 @@ public class SceneController
             System.exit(-1);
         }
     }
-
+    
+    //this method will assert the controls and if there are no controls matching the name, it will come back with an error message.
     @FXML   void initialize(){
         try{
             
@@ -71,7 +75,7 @@ public class SceneController
                 }
             });
     }       
-
+      //the following are different methods that will run when you interact with the scene.
     @FXML   void searchClicked(){
         System.out.println("search button was clicked");
     }
@@ -109,6 +113,9 @@ public class SceneController
         //}
     //}
     
+    
+    
+    // this is the method which will open the second scene from with in the first scene
     void openNewScene(int id){
         FXMLLoader loader = new FXMLLoader(Application.class.getResource("secondScene.fxml"));
         

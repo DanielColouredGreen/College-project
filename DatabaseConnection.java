@@ -8,7 +8,7 @@ public class DatabaseConnection {
 
     private Connection connection = null;
 
-    
+    //this is the method in which the main connections take place as it handles connecting and if there are any errors, the catch parameters will give out an error message.
     public DatabaseConnection(String dbFile)
     {
         try            
@@ -28,7 +28,7 @@ public class DatabaseConnection {
 
     }
 
-    
+    //this method will show any error with give out an error message.
     public PreparedStatement newStatement(String query)
     {
         PreparedStatement statement = null;
@@ -55,7 +55,7 @@ public class DatabaseConnection {
         }
     }
 
-    
+    //this method will update and changes to the database.
     public void executeUpdate(PreparedStatement statement)
     {               
         try {            
@@ -67,7 +67,7 @@ public class DatabaseConnection {
         }
     }
 
-    
+    //this method will end the connection when the application is terminated.
     public void disconnect()
     {
         System.out.println("Disconnecting from database.");
