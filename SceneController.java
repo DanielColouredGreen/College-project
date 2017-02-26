@@ -16,7 +16,7 @@ import javafx.scene.Scene;
 public class SceneController
 {
     private static Stage stage;
-
+// below is where i take the controls from inside the javaFX and then give them a name which i can call on later.
     @FXML   private SplitPane pane;
     @FXML   private ListView list;
     @FXML   private Button searchButton;
@@ -60,7 +60,7 @@ public class SceneController
     games.readAll(targetList);
     }
    
-
+// this method is called to prepare all of the events which will happen when the stage is created.
     public void prepareStageEvents(Stage stage)
     {
         System.out.println("Preparing stage events...");
@@ -83,41 +83,31 @@ public class SceneController
     @FXML   void addClicked() 
     {
        System.out.println("add was clicked");
-       openNewScene(0);
+       openNewScene();
+    }
+    @FXML   void exitClicked()
+    {
+        System.out.println("Closing program");
+        Application.terminate();
     }
         
     
 
-    //@FXML   void deleteClicked(){
-     //   System.out.println("delete button was clicked");
-    //    games selectedItem = (games) list.getSelectionModel().getSelectedItem();
-    //    games.deleteByGameId(selectedItem.GameId);
-      //  initialize();
-    //}
+    @FXML   void deleteClicked(){
+       System.out.println("delete button was clicked");
+    }
 
-    //@FXML   void editClicked(){
-      //  System.out.println("edit button was clicked");
-        //games selectedItem = (games) list.getSelectionModel().getSelectedItem();
-        //openNewScene(selectedItem.GameID);
-    //}
+    @FXML   void editClicked(){
+        System.out.println("edit button was clicked");
 
-    //@FXML   void listClicked(){
-      //  System.out.println("table item was clicked");
-        //games selectedItem = (games) list.getSelectionModel().getSelectedItem();
-        
-        //if ( selectedItem == null){
-          //  System.out.println("nothing has been selected");
-        //}
-        //else{
-           // System.out.println(selectedItem + " (id: " + selectedItem.GameID + ") is selected.");
-        //}
-    //}
-    
+       
+    }
+  
     
     
     // this is the method which will open the second scene from with in the first scene
-    void openNewScene(int id){
-        FXMLLoader loader = new FXMLLoader(Application.class.getResource("secondScene.fxml"));
+    void openNewScene(){
+        FXMLLoader loader = new FXMLLoader(Application.class.getResource("EditUI.fxml"));
         
         try
         {  
@@ -131,7 +121,7 @@ public class SceneController
             controller2.prepareStageEvents(stage2);
             
             controller2.setParent(this);
-           // if (id != 0) controller2.loadItem(id);
+        
             
         }
         catch (Exception ex) 

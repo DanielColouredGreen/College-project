@@ -1,3 +1,5 @@
+package Project;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
@@ -24,13 +26,13 @@ public class games
     
     @Override public String toString()
     {
-        return (Name + "\n" + PublisherName + "\n" + PrimaryGenreName + "\n" + SecondaryGenreName + "\n" + PlatformName);
+        return (Name + "\n" + PublisherName + "\n" + PrimaryGenreName + "\n" + SecondarGenreName + "\n" + PlatformName);
     }
-    // the following method will look in the database and retreave all of the values that have been requested in the prepared statement and I can use this later to display/ populate the scene with values.
+    
     public static void readAll(List<games> list){
         list.clear();
-        // the statement below is a statement which will go into SQL and perform some inner joins and retreave all of the data which i have stated.
-        PreparedStatement statement = Application.database.newStatement("SELECT Games.Name, Publisher.PublisherName, PrimaryGenre.PrimaryGenreName, SecondaryGenre.SecondaryGenreName, Platform.PlatformName FROM Games INNER JOIN Platform ON Games.PlatformID = Platform.PlatformID INNER JOIN PrimaryGenre ON Games.PrimaryGenreID = PrimaryGenre.PrimaryGenreID INNER JOIN Publisher ON Games.PublisherID = Publisher.PublisherID INNER JOIN SecondaryGenre ON Games.SecondaryGenreID = SecondaryGenre.SecondaryGenreID;");
+        
+        PreparedStatement statement = Application.database.newStatement("SELECT Games.Name, Publisher.PublisherName, PrimaryGenre.PrimaryGenreName, SecondaryGenre.SecondaryGenreName, Platform.PlatformName FROM Games INNER JOIN Platform ON Games.PlatformID = Platform.PlatformId INNER JOIN PrimaryGenre ON Games.PrimaryGenreID = PrimaryGenre.PrimaryGenreID INNER JOIN Publisher ON Games.PublisherID = Publisher.PublisherID INNER JOIN SecondaryGenre ON Games.SecondaryGenreID = SecondaryGenre.SecondaryGenreID;");
         
         if(statement != null)
         {
@@ -39,45 +41,45 @@ public class games
             {
                 try{
                     while(results.next()){
-                        list.add(new games(results.getString("Name"), results.getString("PublisherName"), results.getString("PrimaryGenreName"), results.getString("SecondaryGenreName"), results.getString("PlatformID")));
+                        list.add(new game(results.getString("Name"), resluts.getString("PublisherName"), resluts.getString("PrimaryGenreName"), resluts.getString("SecondaryGenreName"), results.getString("PlatfromId")));
                     }
                 }
                 catch (SQLException reslutsexception)
                 {
-                    System.out.println("Database result processing error: " + reslutsexception.getMessage());
+                    System.out.prinltln("Database result processing error: " + reslutsexception.getMessage());
                 }
             }
         }
     }
-    // this method will look in the games table and retrieve the gameId of all teh values.
+    
     public static games getByGameId(int GameId)
     {
-        games game = null;
+        game game = null;
         
-        PreparedStatement statement = Application.database.newStatement("SELECT Games.Name, Publisher.PublisherName, PrimaryGenre.PrimaryGenreName, SecondaryGenre.SecondaryGenreName, Platform.PlatformName FROM Games INNER JOIN Platform ON Games.PlatformID = Platform.PlatformID INNER JOIN PrimaryGenre ON Games.PrimaryGenreID = PrimaryGenre.PrimaryGenreID INNER JOIN Publisher ON Games.PublisherID = Publisher.PublisherID INNER JOIN SecondaryGenre ON Games.SecondaryGenreID = SecondaryGenre.SecondaryGenreID WHERE= ?");
+        PreparedStatement statement = Application.database.newStatement("SELECT Name, PublisherName, PrimaryGenreName, SecondaryGenreName, PlatformName FROM Games WHERE GameId = ?");
         
         try{
             if(statement != null)
             {
                 statement.setInt(1, GameId);
-                ResultSet results = Application.database.runQuery(statement);
+                ResultSet results = Applicatio.database.runQuery(statement);
                 
-                if(results != null)
+                if(resluts != null)
                 {
-                    game = new games(results.getString("Name"), results.getString("PublisherName"), results.getString("PrimaryGenreName"), results.getString("SecondaryGenreName"), results.getString("PlatfromId"));
+                    game = new game(results.getString("Name"), resluts.getInt("GameId"), resluts.getInt("PublisherName"), resluts.getInt("PrimaryGenreName"), resluts.getInt("SecondaryGenreName"), results.getInt("PlatfromId"));
                 }
             }
         }
-        catch (SQLException resultsexception)
+        catch (SQLException reslutsexception)
         {
             System.out.println("Database results processing error: " + resultsexception.getMessage());
         }
         return game;
     }
-    //this method will delete a value by searching for its GameId.
+    
     public static void deleteByGameId(int GameId){
         try{
-            PreparedStatement statement = Application.database.newStatement("DELETE FROM Games WHERE GameId = ?");
+            preparedStatement statement = Application.database.newStatement("DELETE FROM Games WHERE GameId = ?");
             statement.setInt(1, GameId);
             
             if(statement != null)
@@ -87,57 +89,55 @@ public class games
         }
         catch (SQLException resultsexception)
         {
-            System.out.println("Database result processing error: " + resultsexception.getMessage());
+            System.out.println("Database result processing error: " + reslutsexception.getMessage());
         }
     }
-    //this method will save all of the change that have been made to the database file.
- 
     
-    //public void save()
-    //{
-      //  PreparedStatement statement;
-       
-       // try{
-       //     if (GameId == 0)
-        //    {
-         //       statement = Application.database.newStatement("SELECT GameId FROM Games ORDER BY GameId DESC");
+    public void save()
+    {
+        PreparedStatement statement;
+        
+        try{
+            if (GameId == 0)
+            {
+                statement = Application.database.newStatement("SELECT GameId FROM Games ORDER BY GameId DESC");
                 
-          //      if (statement != null)
-          //      {
-            //       ResultSet results = Application.database.runQuery(statement);
-            //        if (results != null)
-              //      {
-             //          GameId = results.getInt("GameId") + 1;
-             //       }
-             //   }
+                if (statement != null)
+                {
+                    ResultSet results = Application.database.runQuery(statement);
+                    if (results != null)
+                    {
+                        GameId = results.getInt("GameId") + 1;
+                    }
+                }
                 
-             //   statement = Application.database.newStatement("INSERT INTO Games (Name, GameId, PublisherName, PrimaryGenreName, SecondaryGenreName, PlatformName) VALUES (?, ?, ?, ?, ?, ?)");
-             //   statement.setString(1, Name);
-             //   statement.setInt(2, GameId);
-             //   statement.setInt(3, PublisherName);
-             //   statement.setInt(4, PrimaryGenreName);
-              //  statement.setInt(5, SecondaryGenreName);
-             //   statement.setInt(6, PlatformName);
-          // }
-           // else
-            //{
+                statement = Application.database.newStatement("INSERT INTO Games (Name, GameId, PublisherName, PrimaryGenreName, SecondaryGenreName, PlatformName) VALUES (?, ?, ?, ?, ?, ?)");
+                statement.setString(1, Name);
+                statement.setInt(2, GameId);
+                statement.setInt(3, PublisherName);
+                statement.setInt(4, PrimaryGenreName);
+                statement.setInt(5, SecondaryGenreName);
+                statement.setInt(6, PlatformName);
+            }
+            else
+            {
                 
-               // statement = Application.database.newStatement("UPDATE Games SET Name = ?, PublisherName = ?, PrimaryGenreName = ?, SecondaryGenreName = ?, PlatformName = ? WHERE GameId = ?");
-              //  statement.setString(1, Name);
-              //  statement.setInt(2, PublisherName);
-              //  statement.setInt(3, PrimaryGenreName);
-              //  statement.setInt(4, SecondaryGenreName);
-              //  statement.setInt(5, PlatformName);
-              //  statement.setInt(6, GameId);
-           // }
-            //if (statement != null)
-           // {
-           //    Application.database.executeUpdate(statement);
-           // }
-        //}
-       // catch (SQLException resultsexception)
-        //{
-         //  System.out.println("Database results processing error: " + reslutsexception.getMessage());
-       // }
-    //}
+                statement = Application.database.newStatement("UPDATE Games SET Name = ?, PublisherName = ?, PrimaryGenreName = ?, SecondaryGenreName = ?, PlatformName = ? WHERE GameId = ?");
+                statement.setString(1, Name);
+                statement.setInt(2, PublisherName);
+                statement.setInt(3, PrimaryGenreName);
+                statement.setInt(4, SecondaryGenreName);
+                statement.setInt(5, PlatformName);
+                statement.setInt(6, GameId);
+            }
+            if (statement != null)
+            {
+                Application.database.executeUpdate(statement);
+            }
+        }
+        catch (SQLException resultsexception)
+        {
+            System.out.println("Database results processing error: " + reslutsexception.getMessage());
+        }
+    }
 }
